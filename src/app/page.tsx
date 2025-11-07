@@ -54,29 +54,18 @@ export default function Home() {
     }
   }, []);
 
-  const getCellStyle = (isCurrentDay: boolean) => {
-    if (isCurrentDay) {
-      return {
-        backgroundColor: "#e6f7ff",
-        border: "2px solid #1890ff",
-        fontWeight: "bold",
-      };
-    }
-    return {};
-  };
-
   return (
     <main>
       <h1>ကိုးနဝင်းကျင့်စဉ်</h1>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', backgroundColor: '#fff', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', borderRadius: '8px' }}>
-        <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Today's Prayer</h2>
+      <div className="today-card">
+        <h2>Today's Prayer</h2>
         {currentDate && <p><strong>Current Date:</strong> {currentDate.toLocaleDateString()}</p>}
         {todayInfo ? (
           <>
             <p><strong>Cycle Day:</strong> {todayInfo.cycleDay} / {TOTAL_DAYS}</p>
             <p><strong>Stage:</strong> {todayInfo.stageName}</p>
-            <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}><strong>Today's Guna:</strong> {todayInfo.guna} ({todayInfo.gunaRounds} ပတ်)</p>
+            <p className="guna"><strong>Today's Guna:</strong> {todayInfo.guna} ({todayInfo.gunaRounds} ပတ်)</p>
           </>
         ) : (
           <p>The prayer cycle is either not yet started or has completed.</p>
@@ -95,14 +84,17 @@ export default function Home() {
         <tbody>
           {KO_NAWIN_GUNA_INDICES.map((stage, stageIndex) => (
             <tr key={stageIndex}>
-              <td>{BURMESE_STAGE_NAMES[stageIndex]}</td>
+              <td data-label="အဆင့်">{BURMESE_STAGE_NAMES[stageIndex]}</td>
               {stage.map((gunaIndex, dayIndex) => (
                 <td
                   key={dayIndex}
-                  style={getCellStyle(
+                  data-label={BURMESE_DAYS_OF_STAGE[dayIndex]}
+                  className={
                     todayInfo?.stageIndex === stageIndex &&
                     todayInfo?.dayInStageIndex === dayIndex
-                  )}
+                      ? "highlight"
+                      : ""
+                  }
                 >
                   {GUNAS[gunaIndex]} ({GUNA_ROUNDS[gunaIndex]} ပတ်)
                 </td>
