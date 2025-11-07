@@ -5,6 +5,7 @@ import {
   BURMESE_DAYS_OF_STAGE,
   BURMESE_STAGE_NAMES,
   GUNAS,
+  GUNA_ROUNDS,
   KO_NAWIN_GUNA_INDICES,
   DAYS_PER_STAGE,
   TOTAL_DAYS,
@@ -16,6 +17,7 @@ export default function Home() {
     stageIndex: number;
     dayInStageIndex: number;
     guna: string;
+    gunaRounds: number;
     stageName: string;
   } | null>(null);
   const [currentDate, setCurrentDate] = useState<Date | null>(null);
@@ -27,7 +29,6 @@ export default function Home() {
 
     const diffTime = today.getTime() - startDate.getTime();
     if (diffTime < 0) {
-      // The cycle has not started yet
       setTodayInfo(null);
       return;
     }
@@ -45,10 +46,10 @@ export default function Home() {
         stageIndex,
         dayInStageIndex,
         guna: GUNAS[gunaIndex],
+        gunaRounds: GUNA_ROUNDS[gunaIndex],
         stageName: BURMESE_STAGE_NAMES[stageIndex],
       });
     } else {
-      // The 81-day cycle is complete
       setTodayInfo(null);
     }
   }, []);
@@ -75,7 +76,7 @@ export default function Home() {
           <>
             <p><strong>Cycle Day:</strong> {todayInfo.cycleDay} / {TOTAL_DAYS}</p>
             <p><strong>Stage:</strong> {todayInfo.stageName}</p>
-            <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}><strong>Today's Guna:</strong> {todayInfo.guna}</p>
+            <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}><strong>Today's Guna:</strong> {todayInfo.guna} ({todayInfo.gunaRounds} ပတ်)</p>
           </>
         ) : (
           <p>The prayer cycle is either not yet started or has completed.</p>
@@ -103,7 +104,7 @@ export default function Home() {
                     todayInfo?.dayInStageIndex === dayIndex
                   )}
                 >
-                  {GUNAS[gunaIndex]}
+                  {GUNAS[gunaIndex]} ({GUNA_ROUNDS[gunaIndex]} ပတ်)
                 </td>
               ))}
             </tr>
