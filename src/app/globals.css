@@ -97,6 +97,7 @@ h2 {
     position: relative;
     border: none;
     border-bottom: 1px solid var(--table-border-color);
+    line-height: 2.2; /* Aggressive line-height for mobile */
   }
 
   td:before {
