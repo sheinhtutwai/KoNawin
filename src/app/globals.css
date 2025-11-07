@@ -100,14 +100,19 @@ h2 {
     line-height: 2.2; /* Aggressive line-height for mobile */
   }
 
+  td {
+    text-align: left; /* Align text to the left */
+    padding: 1rem;
+    position: relative;
+    border-bottom: 1px solid var(--table-border-color);
+  }
+
   td:before {
     content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 45%;
-    padding-left: 1rem;
+    display: block; /* Make the label a block element */
     font-weight: bold;
-    text-align: left;
+    margin-bottom: 0.5rem; /* Add space below the label */
+    color: var(--primary-color);
   }
 
   /* Style the first cell (stage name) as a header for the block */
